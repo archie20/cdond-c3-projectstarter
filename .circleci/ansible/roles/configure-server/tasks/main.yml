@@ -1,0 +1,35 @@
+---
+- name: "update apt packages"
+  become: yes
+  apt:
+    update_cache: yes
+    
+- name: "upgrade packages"
+  become: yes
+  apt:
+    upgrade: yes 
+
+- name: "Install python packages"
+  become: yes
+  apt:
+    name: ["python3-pip","build-essential","libssl-dev","libffi-dev","python3-dev"]
+    
+- name: "Remove non-required deps"
+  become: yes
+  apt:
+    autoremove: yes    
+
+- name: "Install nodejs"
+  become: yes
+  apt:
+    name: ["nodejs","npm"]
+    state: latest
+    update_cache: yes
+
+- name: "Install pm2"
+  become: yes
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present      

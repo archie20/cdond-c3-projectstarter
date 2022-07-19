@@ -8,18 +8,18 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack \
-            --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} 
+            --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}  
+      - run:
+          name: Empty bucket
+          when: on_fail
+          command: |
+            aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive 
       - run:
           name: Destroy frontend environment
           when: on_fail
           command: |
             aws cloudformation delete-stack \
-            --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7} 
-      - run:
-          name: Empty bucket
-          when: on_fail
-          command: |
-            aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive      
+            --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}           
   rollback-migrations:
     steps:
       - run:
@@ -297,7 +297,7 @@ jobs:
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" 
-            --output text) > be_url.txt
+            --output text > be_url.txt
       - run:
           name: Backend smoke test.
           command: |
@@ -326,7 +326,7 @@ jobs:
           keys: [backend-build]      
       - destroy-environment
       - rollback-migrations       
-                 
+                
 workflows:
   default:
     jobs:
@@ -351,4 +351,4 @@ workflows:
       - deploy-backend:
           requires: [run-migrations]
       - smoke-test:
-          requires: [deploy-backend, deploy-frontend]         
+          requires: [deploy-backend, deploy-frontend]           

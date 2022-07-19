@@ -267,7 +267,7 @@ jobs:
       - run:
           name: Build backend
           command: |
-            sudo npm install -g typescript
+            npm install -g typescript
             npm install -g ts-node
             cd backend
             npm i

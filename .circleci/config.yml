@@ -213,6 +213,7 @@ jobs:
           name: Run migrations
           command: |
             cd backend
+            npm -g install typescript
             npm install
             npm run migrations > migrations_dump.txt
             echo "Run migrations"

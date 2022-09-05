@@ -20,7 +20,7 @@ commands:
           command: |
             aws cloudformation delete-stack \
             --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}           
-  rollback-migrations:
+  revert-migrations:
     steps:
       - run:
           name: Rollback backend migrations
@@ -284,7 +284,7 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy-environment     
-      - rollback-migrations
+      - revert-migrations
   
   smoke-test:
     docker:
@@ -325,7 +325,7 @@ jobs:
       - restore_cache:
           keys: [backend-build]      
       - destroy-environment
-      - rollback-migrations       
+      - revert-migrations       
                 
 workflows:
   default:

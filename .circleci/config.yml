@@ -26,7 +26,7 @@ commands:
           name: Rollback backend migrations
           when: on_fail
           command: |
-            SUCCESS=$(curl --insecure  https://kvdb.io/YVf3WhDCv99mrcDJ82Q551/migration_${CIRCLE_WORKFLOW_ID:0:7})
+            SUCCESS=$(curl --insecure  https://kvdb.io/HVaC7zh31tMNiAh9C5i6QN/migration_${CIRCLE_WORKFLOW_ID:0:7})
             if (( $SUCCESS == 1 ));
             then
                 cd ~/project/backend
@@ -210,7 +210,7 @@ jobs:
           command: |   
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
-                curl --insecure https://kvdb.io/YVf3WhDCv99mrcDJ82Q551/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+                curl --insecure https://kvdb.io/HVaC7zh31tMNiAh9C5i6QN/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
       - destroy-environment
   deploy-frontend:

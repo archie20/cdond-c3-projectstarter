@@ -211,10 +211,10 @@ jobs:
             echo TYPEORM_DATABASE=${TYPEORM_DATABASE} >> .env
             echo TYPEORM_PORT=${TYPEORM_PORT} >> .env
             echo TYPEORM_ENTITIES=${TYPEORM_ENTITIES} >> .env
-            ls
+            ls -a
             npm -g install typescript ts-node
             npm install
-            su npm run migrations > migrations_dump.txt
+            npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
       - run:
           name: Send migration status to kvdb.io
@@ -360,7 +360,8 @@ workflows:
       #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       # - configure-infrastructure:
       #     requires: [deploy-infrastructure]
-      - run-migrations
+      - run-migrations:
+          requires: [build-backend]
       #     requires: [configure-infrastructure]
       # - deploy-frontend:
       #     requires: [run-migrations]
